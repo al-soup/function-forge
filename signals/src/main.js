@@ -18,6 +18,10 @@ document.querySelector("#app").innerHTML = `
     <div class="card">
       <button id="counter-observable" type="button">the count is 0</button>
     </div>
+    <h2>Counter through Signal</h2>
+    <div class="card">
+      <button id="counter-signal" type="button">the count is 0</button>
+    </div>
   </div>
 `;
 
@@ -50,12 +54,12 @@ count$.subscribe((value) => {
 
 // Setting up a second subscriber
 const logger$ = count$.subscribe((value) => {
-  console.log(`the count is ${value}`);
+  console.log(`Observable: the count is ${value}`);
 });
 
 // And also unsubscribe if we want to
 const unsubscribe = count$.subscribe((value) => {
-  console.log(`${value}/4`);
+  console.log(`Observable ${value}/4`);
   if (value === 4) {
     unsubscribe();
   }
@@ -64,5 +68,28 @@ const unsubscribe = count$.subscribe((value) => {
 // By subscribing to the observable we can react events in the data stream but not access it's state. Later subscribers will not be able to access previous values.
 count$.increment();
 const lateSub = count$.subscribe((value) => {
-  console.log(`I can never log the number "1". Currently: ${value}`);
+  console.log(
+    `Observable: I can never log the number "1". Currently: ${value}`
+  );
+});
+
+// Another approach would be to use signals. Signals are similar to observables but they allow access to the current value and use way less boilerplate setup:
+import { signal, effect, derived } from "./signal";
+
+const counterSignalBtn = document.querySelector("#counter-signal");
+
+const countSignal = signal(0);
+
+effect(() => {
+  console.log(`Signal: the count is ${countSignal.value}`);
+  counterSignalBtn.innerText = `the count is ${countSignal.value}`;
+});
+
+counterSignalBtn.addEventListener("click", () => {
+  countSignal.value++;
+});
+
+let double = derived(() => countSignal.value * 2);
+effect(() => {
+  console.log(`Signal: the double is ${double.value}`);
 });

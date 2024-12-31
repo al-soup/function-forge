@@ -13,3 +13,5 @@ The observable can be a class, an object or a function that stores its subscribe
 ## Signals (Subjects)
 
 Signals, in contrast, are inherently stateful. They always store their current value, and their primary function is to manage and provide access to that state while reacting to changes. Like observables they also have subscribers but additionally expose a `get` and `set` method. If a new value is set the change is synchronizes automatically.
+
+Signals alone just store a value that may or may not change. What else we need are **reactions (of effects)** to get the full advantage. Effects observe our signals and re-run them every time their value updates.
