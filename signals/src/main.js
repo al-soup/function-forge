@@ -35,11 +35,12 @@ counterStandardBtn.addEventListener("click", () => {
 
 /** @type {HTMLButtonElement} */
 const counterObservableBtn = document.querySelector("#counter-observable");
-const count$ = observable();
+const count$ = observable(0);
 
 // We can now update the observable's value when the button is clicked.
 counterObservableBtn.addEventListener("click", () => {
-  count$.update(count$.value + 1);
+  // the observable handles state internally
+  count$.increment();
 });
 
 // We can now subscribe to the observable and interact with new values.
@@ -58,4 +59,10 @@ const unsubscribe = count$.subscribe((value) => {
   if (value === 4) {
     unsubscribe();
   }
+});
+
+// By subscribing to the observable we can react events in the data stream but not access it's state. Later subscribers will not be able to access previous values.
+count$.increment();
+const lateSub = count$.subscribe((value) => {
+  console.log(`I can never log the number "1". Currently: ${value}`);
 });

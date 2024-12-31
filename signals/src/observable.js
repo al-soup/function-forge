@@ -2,48 +2,45 @@
 
 /**
  * @typedef {Object} Observable
- * @property {number} value
- * @property {function(number): void} update
- * @property {function(Function): function(): void} subscribe
- * @property {function(number): void} notify
+ * @property {function(): void} increment - Increases the value of the observable.
+ * @property {function(Function): function(): void} subscribe - Subscribes a function to the observable.
+ * @property {function(number): void} notify - Notifies all subscribers with the new value.
  */
 
 /**
  * Creates an observable object.
- * @param {number} [initialValue=0]
- * @returns {Observable}
+ * @param {number} value - The initial value of the observable.
+ * @returns {Observable} The observable object.
  */
-export function observable(initialValue = 0) {
+export function observable(value) {
   /**
    * @type {Set<Function>}
    */
   const subscribers = new Set();
 
   return {
-    value: initialValue,
     /**
-     * Updates the observable with a new value.
-     * @param {number} value
+     * Increases the value of the observable.
      */
-    update(value) {
-      this.value = value;
+    increment() {
+      value++;
       this.notify(value);
     },
     /**
      * Subscribes a function to the observable.
-     * @param {Function} fn
+     * @param {Function} fn - The function to subscribe.
      * @returns {function(): void} Cleanup function to unsubscribe.
      */
     subscribe(fn) {
       subscribers.add(fn);
-      // return a cleanup function
+
       return () => {
         subscribers.delete(fn);
       };
     },
     /**
      * Notifies all subscribers with the new value.
-     * @param {number} value
+     * @param {number} value - The new value to notify subscribers with.
      */
     notify(value) {
       for (const subscriber of subscribers) {
