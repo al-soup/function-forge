@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import { binarySearch } from "./main.ts";
+import { binarySearch, linearSearch } from "./search.ts";
 
 // 100 elements
 const sortedArr = [
@@ -11,6 +11,10 @@ const sortedArr = [
   364, 369, 373, 378, 382, 387, 391, 396, 400, 405, 409, 414, 418, 423, 427,
   432, 436, 441, 445,
 ];
+
+Deno.test(function linearSearchTest() {
+  assertEquals(linearSearch(sortedArr, sortedArr[10]), true);
+});
 
 Deno.test(function binarySearchTest() {
   assertEquals(binarySearch(sortedArr, 387), true);
