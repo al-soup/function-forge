@@ -1,4 +1,19 @@
-// Returns a boolean of wether the needle n is in the haystack arr
+/**
+ * Time complexity: O(n)
+ * Space complexity: O(1)
+ */
+export function linearSearch(arr: number[], needle: number): boolean {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === needle) return true;
+  }
+
+  return false;
+}
+
+/**
+ * Time complexity: O(log n)
+ * Space complexity: O(1)
+ */
 export function binarySearch(arr: number[], needle: number): boolean {
   // [a, b] -> both inclusive
   // (a, b) -> both exclusive
