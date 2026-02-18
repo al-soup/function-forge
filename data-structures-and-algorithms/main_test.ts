@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import { binarySearch, linearSearch } from "./search.ts";
+import twoCrystalBalls, { binarySearch, linearSearch } from "./search.ts";
 
 // 100 elements
 const sortedArr = [
@@ -22,4 +22,12 @@ Deno.test(function binarySearchTest() {
   assertEquals(binarySearch(sortedArr, 2), true);
   assertEquals(binarySearch(sortedArr, 198), true);
   assertEquals(binarySearch(sortedArr, 401), false);
+});
+
+Deno.test(function twoCrystalBallsTest() {
+  assertEquals(twoCrystalBalls([false, false, false, false, true, true]), 4);
+  const crystalBallArr = Array.from({ length: 80 }, (_, i) =>
+    i >= 69 ? true : false,
+  );
+  assertEquals(twoCrystalBalls(crystalBallArr), 69);
 });

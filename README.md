@@ -18,6 +18,12 @@
 
 ## Data Structure & Algorithms
 
-### Search
+### Searching
 
-- [ ] Binary Search
+- [x] Linear Search
+- [x] Binary Search
+- [x] The Two Crystal Balls Problem
+
+### Sorting
+
+- [ ] Bubble Sort

@@ -59,3 +59,34 @@ export function binarySearch(arr: number[], needle: number): boolean {
 
   // return false;
 }
+
+/**
+ * Given an array of boolean values, where `true` represents a broken crystal ball and `false` represents an intact crystal ball, determine the index of the first
+ * broken crystal ball. You are allowed to drop a crystal ball from any index in the array. If it breaks, you can no longer use that ball. If it doesn't break, you
+ * can reuse it. Your goal is to find the index of the first broken crystal ball using the minimum number of drops.
+ *
+ * For example, if the input array is `[false, false, true, true, true]`, the function should return `2`, since the first broken crystal ball is at index `2`.
+ *
+ * sqrt(n) is a good step size: you don't want to take too many little steps, but you also don't want to take go back too much and do too many one-by-one steps from to last position.
+ * Time complexity: O(sqrt(n))
+ * Space complexity: O(1)
+ */
+export default function twoCrystalBalls(breaks: boolean[]): number {
+  const stepSize = Math.floor(Math.sqrt(breaks.length));
+
+  let height: number = stepSize;
+  // Advance by one step
+  for (let i = 0; i < breaks.length; i += stepSize) {
+    if (breaks[i]) {
+      break;
+    }
+    height = i;
+  }
+
+  // If the ball was broken you advance one-by-one from the last unbroken position
+  for (let j = height; j < breaks.length; j++) {
+    if (breaks[j]) return j;
+  }
+
+  return -1;
+}
