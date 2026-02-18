@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "request": "launch",
+      "name": "D&A: Debug Test",
+      "type": "node",
+      "cwd": "${workspaceFolder}/data-structures-and-algorithms",
+      "env": {},
+      "runtimeExecutable": "/opt/homebrew/bin/deno",
+      "runtimeArgs": [
+        "test",
+        "--inspect-wait=0.0.0.0:9229",
+        "--allow-all",
+        "--no-check",
+        "--config",
+        "${workspaceFolder}/data-structures-and-algorithms/deno.json",
+        "${file}"
+      ],
+      "attachSimplePort": 9229
+    }
+  ]
+}

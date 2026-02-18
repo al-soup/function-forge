@@ -71,7 +71,7 @@ export function binarySearch(arr: number[], needle: number): boolean {
  * Time complexity: O(sqrt(n))
  * Space complexity: O(1)
  */
-export default function twoCrystalBalls(breaks: boolean[]): number {
+export function twoCrystalBalls(breaks: boolean[]): number {
   const stepSize = Math.floor(Math.sqrt(breaks.length));
 
   let height: number = stepSize;

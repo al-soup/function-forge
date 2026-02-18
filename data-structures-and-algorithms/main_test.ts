@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import twoCrystalBalls, { binarySearch, linearSearch } from "./search.ts";
+import { binarySearch, linearSearch, twoCrystalBalls } from "./search.ts";
 import { bubbleSort } from "./sort.ts";
 
 // 100 elements

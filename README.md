@@ -22,8 +22,10 @@
 
 - [x] Linear Search
 - [x] Binary Search
-- [x] The Two Crystal Balls Problem
+- [x] The "Two Crystal Balls" Problem
 
 ### Sorting
 
-- [ ] Bubble Sort
+- [x] Bubble Sort
+- [ ] Queue
+- [ ] Stack
