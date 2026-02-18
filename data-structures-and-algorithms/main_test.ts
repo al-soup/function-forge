@@ -1,5 +1,6 @@
 import { assertEquals } from "@std/assert";
 import twoCrystalBalls, { binarySearch, linearSearch } from "./search.ts";
+import { bubbleSort } from "./sort.ts";
 
 // 100 elements
 const sortedArr = [
@@ -30,4 +31,11 @@ Deno.test(function twoCrystalBallsTest() {
     i >= 69 ? true : false,
   );
   assertEquals(twoCrystalBalls(crystalBallArr), 69);
+});
+
+Deno.test(function bubbleSortTest() {
+  const arr = [2, 3, 4, 2, 6, 75, 50, 12, 6];
+  const sorted = [...arr].sort((a, b) => a - b);
+  bubbleSort(arr);
+  assertEquals(arr, sorted);
 });
