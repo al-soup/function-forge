@@ -44,22 +44,24 @@ other test cases
 [7,2,5,1,9]
 */
 
-const hasOceanView = (buildings: number[]) => {
-  const hasOceanView: number[] = [];
+const getBuildingsWithOceanView = (buildingsHeights: number[]) => {
+  const buildingsWithOceanView: number[] = [];
 
-  buildings.forEach((e, i) => {
+  for (const [i, buildingHeight] of buildingsHeights.entries()) {
     let hasView = true;
-    buildings.forEach((right, j) => {
+    // Check every building to the right of the current building
+    for (const [j, nextBuildingHeight] of buildingsHeights.entries()) {
+      if (!hasView) break;
       if (j > i) {
-        if (right > e) {
+        if (nextBuildingHeight > buildingHeight) {
           hasView = false;
         }
       }
-    });
-    if (hasView) hasOceanView.push(i);
-  });
+    }
+    if (hasView) buildingsWithOceanView.push(i);
+  }
 
-  return hasOceanView;
+  return buildingsWithOceanView;
 };
 
-console.log(hasOceanView([4, 2, 3, 1]));
+console.log(getBuildingsWithOceanView([4, 2, 3, 1]));
