@@ -2,7 +2,7 @@
 
 ## JS/TS Topics
 
-- [x] Signals
+- [x] Signals & Observables
 - [ ] [Currying](https://javascript.info/currying-partials)
 - [ ] Decorators
 - [ ] Closures

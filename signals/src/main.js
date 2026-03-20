@@ -1,4 +1,4 @@
-import { observable } from "./observable";
+import { observable } from "./observable.js";
 import "./style.css";
 
 /**
@@ -69,12 +69,12 @@ const unsubscribe = count$.subscribe((value) => {
 count$.increment();
 const lateSub = count$.subscribe((value) => {
   console.log(
-    `Observable: I can never log the number "1". Currently: ${value}`
+    `Observable: I can never log the number "1". Currently: ${value}`,
   );
 });
 
 // Another approach would be to use signals. Signals are similar to observables but they allow access to the current value and use way less boilerplate setup:
-import { signal, effect, derived } from "./signal";
+import { signal, effect, derived } from "./signal.js";
 
 const counterSignalBtn = document.querySelector("#counter-signal");
 

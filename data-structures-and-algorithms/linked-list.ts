@@ -3,7 +3,8 @@ type Node<T> = {
   next?: Node<T>;
 };
 
-// A Queue is a specific implementation of a Linked-List. FIFO singly Linked-List
+// A Queue is a specific implementation of a Linked-List. FIFO singly Linked-List.
+// (+) You are faster adding or removing from the head an LinkedList than in an array. But you have to traverse the whole LinkedList (linear) if you randomly want to access an item.
 // A -> B -> C -> D
 // ^---head       ^---tail
 export class Queue<T> {
