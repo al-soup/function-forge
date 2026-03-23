@@ -2,8 +2,11 @@
  
  * Efficient in adding and removing from the end (push/pop) with O(1). If the ArrayList exceeds its capacity we usually double the capacity.
  * Inserting or deleting from the front or middle requires shifting all subsequent elements, resulting in an O(N) time complexity.
+ * 
  * Push and pop at the end are O(1) operations, while enqueue and dequeue from the front require shifting all elements, making them O(N) operations
  * An ArrayList provides constant-time random access by index and efficient push/pop operations at the end, whereas a Linked List provides efficient insertion and deletion at any point
+ * 
+ * so `const a = []` ins JS is not an (static) array (because it's growable) but rather an array list (or dynamic array).
  */
 export class ArrayList<T> {
   public length: number;

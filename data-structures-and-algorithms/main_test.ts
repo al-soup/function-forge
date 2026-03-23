@@ -3,6 +3,7 @@ import { expect } from "@std/expect";
 import { ArrayList } from "./array-list.ts";
 import { binarySearch, linearSearch, twoCrystalBalls } from "./search.ts";
 import { bubbleSort } from "./sort.ts";
+import { RingBuffer } from "./ring-buffer.ts";
 
 // 100 elements
 const sortedArr = [
@@ -105,4 +106,25 @@ Deno.test(function arrayListCapacityTest() {
   expect(list2.get(0)).toEqual(3);
   expect(list2.get(1)).toEqual(2);
   expect(list2.get(2)).toEqual(1);
+});
+
+Deno.test(function ringBufferTest() {
+  const buffer = new RingBuffer<number>();
+
+  buffer.push(5);
+  expect(buffer.pop()).toEqual(5);
+  expect(buffer.pop()).toEqual(undefined);
+
+  buffer.push(42);
+  buffer.push(9);
+  expect(buffer.pop()).toEqual(42);
+  expect(buffer.pop()).toEqual(9);
+  expect(buffer.pop()).toEqual(undefined);
+
+  buffer.push(42);
+  buffer.push(9);
+  buffer.push(12);
+  expect(buffer.get(2)).toEqual(12);
+  expect(buffer.get(1)).toEqual(9);
+  expect(buffer.get(0)).toEqual(42);
 });
