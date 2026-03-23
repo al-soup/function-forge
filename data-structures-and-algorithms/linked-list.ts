@@ -53,6 +53,7 @@ export class Queue<T> {
 }
 
 // A Stack is just the reversed Queue. A LIFO singly Linked-List. You only add and remove from the head.
+// Terminology: head-operations are called push/pop while tail operations are called enqueue/deque.
 // push and pop are both constant time operations.
 // A <- B <- C <- D
 // ^---tail       ^---head

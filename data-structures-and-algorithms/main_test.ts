@@ -1,4 +1,6 @@
 import { assertEquals } from "@std/assert";
+import { expect } from "@std/expect";
+import { ArrayList } from "./array-list.ts";
 import { binarySearch, linearSearch, twoCrystalBalls } from "./search.ts";
 import { bubbleSort } from "./sort.ts";
 
@@ -38,4 +40,69 @@ Deno.test(function bubbleSortTest() {
   const sorted = [...arr].sort((a, b) => a - b);
   bubbleSort(arr);
   assertEquals(arr, sorted);
+});
+
+Deno.test(function arrayListTest() {
+  const list = new ArrayList<number>(3);
+
+  list.append(5);
+  list.append(7);
+  list.append(9);
+
+  expect(list.get(2)).toEqual(9);
+  expect(list.removeAt(1)).toEqual(7);
+  expect(list.length).toEqual(2);
+
+  list.append(11);
+  expect(list.removeAt(1)).toEqual(9);
+  expect(list.remove(9)).toEqual(undefined);
+  expect(list.removeAt(0)).toEqual(5);
+  expect(list.removeAt(0)).toEqual(11);
+  expect(list.length).toEqual(0);
+
+  list.prepend(5);
+  list.prepend(7);
+  list.prepend(9);
+
+  expect(list.get(2)).toEqual(5);
+  expect(list.get(0)).toEqual(9);
+  expect(list.remove(9)).toEqual(9);
+  expect(list.length).toEqual(2);
+  expect(list.get(0)).toEqual(7);
+});
+
+Deno.test(function arrayListCapacityTest() {
+  const list = new ArrayList<number>(2);
+
+  // Fill to capacity
+  list.append(1);
+  list.append(2);
+
+  // This should trigger a resize
+  list.append(3);
+  expect(list.length).toEqual(3);
+  expect(list.get(0)).toEqual(1);
+  expect(list.get(1)).toEqual(2);
+  expect(list.get(2)).toEqual(3);
+
+  // Verify it still works after resize
+  list.append(4);
+  list.append(5);
+  expect(list.length).toEqual(5);
+  expect(list.get(4)).toEqual(5);
+
+  // Make sure remove still works after resize
+  expect(list.removeAt(2)).toEqual(3);
+  expect(list.length).toEqual(4);
+  expect(list.get(2)).toEqual(4);
+
+  // Test prepend triggering resize
+  const list2 = new ArrayList<number>(2);
+  list2.prepend(1);
+  list2.prepend(2);
+  list2.prepend(3); // should trigger resize
+  expect(list2.length).toEqual(3);
+  expect(list2.get(0)).toEqual(3);
+  expect(list2.get(1)).toEqual(2);
+  expect(list2.get(2)).toEqual(1);
 });
