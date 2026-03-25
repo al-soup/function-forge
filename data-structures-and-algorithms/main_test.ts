@@ -1,9 +1,10 @@
 import { assertEquals } from "@std/assert";
 import { expect } from "@std/expect";
 import { ArrayList } from "./array-list.ts";
+import { type Point, solveMaze } from "./recursion.ts";
+import { RingBuffer } from "./ring-buffer.ts";
 import { binarySearch, linearSearch, twoCrystalBalls } from "./search.ts";
 import { bubbleSort } from "./sort.ts";
-import { RingBuffer } from "./ring-buffer.ts";
 
 // 100 elements
 const sortedArr = [
@@ -127,4 +128,50 @@ Deno.test(function ringBufferTest() {
   expect(buffer.get(2)).toEqual(12);
   expect(buffer.get(1)).toEqual(9);
   expect(buffer.get(0)).toEqual(42);
+});
+
+Deno.test(function solveMazeTest() {
+  const maze = [
+    "XXXXXXXXXX X",
+    "X        X X",
+    "X        X X",
+    "X XXXXXXXX X",
+    "X          X",
+    "X XXXXXXXXXX",
+  ];
+
+  const start = { x: 10, y: 0 };
+  const end = { x: 1, y: 5 };
+
+  const mazeResult = [
+    start,
+    { x: 10, y: 1 },
+    { x: 10, y: 2 },
+    { x: 10, y: 3 },
+    { x: 10, y: 4 },
+    { x: 9, y: 4 },
+    { x: 8, y: 4 },
+    { x: 7, y: 4 },
+    { x: 6, y: 4 },
+    { x: 5, y: 4 },
+    { x: 4, y: 4 },
+    { x: 3, y: 4 },
+    { x: 2, y: 4 },
+    { x: 1, y: 4 },
+    end,
+  ];
+
+  // there is only one path through
+  const result = solveMaze(maze, "X", start, end);
+  expect(drawPath(maze, result)).toEqual(drawPath(maze, mazeResult));
+
+  function drawPath(data: string[], path: Point[]) {
+    const data2 = data.map((row) => row.split(""));
+    path.forEach((p) => {
+      if (data2[p.y] && data2[p.y][p.x]) {
+        data2[p.y][p.x] = "*";
+      }
+    });
+    return data2.map((d) => d.join(""));
+  }
 });
