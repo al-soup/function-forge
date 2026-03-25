@@ -16,6 +16,7 @@ const directions = [
   [0, 1],
 ];
 
+// It's good to use recursion when there is no defined end or a significant branching factor
 function walk(
   maze: Maze,
   wall: string,
@@ -24,7 +25,7 @@ function walk(
   seen: boolean[][],
   path: Point[],
 ): boolean {
-  // 1. Base Case:
+  // 1. Base Case - the reason why you should stop recursing. Put as much of the logic here as possible
   // Are we off the map?
   if (
     curr.x < 0 ||
@@ -66,7 +67,9 @@ function walk(
     }
   }
 
-  // 2.3 Post - we did not find the end in our current position
+  // 2.3 Post - we did not find the end in our current position and we have tired all directions.
+  // We remove the position from our stack and go back where we left off at the last position before
+  // we entered this one. At the last position we will try a new direction.
   path.pop();
   return false;
 }
