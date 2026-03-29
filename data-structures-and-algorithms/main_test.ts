@@ -4,7 +4,7 @@ import { ArrayList } from "./array-list.ts";
 import { type Point, solveMaze } from "./recursion.ts";
 import { RingBuffer } from "./ring-buffer.ts";
 import { binarySearch, linearSearch, twoCrystalBalls } from "./search.ts";
-import { bubbleSort } from "./sort.ts";
+import { bubbleSort, quickSort } from "./sort.ts";
 
 // 100 elements
 const sortedArr = [
@@ -174,4 +174,11 @@ Deno.test(function solveMazeTest() {
     });
     return data2.map((d) => d.join(""));
   }
+});
+
+Deno.test(function quickSortTest() {
+  const arr = [9, 3, 7, 4, 69, 420, 42];
+
+  quickSort(arr);
+  expect(arr).toEqual([3, 4, 7, 9, 42, 69, 420]);
 });
