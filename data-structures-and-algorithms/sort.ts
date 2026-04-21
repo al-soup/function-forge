@@ -32,7 +32,6 @@ export function bubbleSort(arr: number[]): void {
   */
 }
 
-// TODO: compare to MergeSort
 /**
  * QuickSort
  *
@@ -49,20 +48,20 @@ export function bubbleSort(arr: number[]): void {
  *
  * Explanation:
  * The sum S = 1 + 2 + 3 + 4 + 5 can be calculated by reversing the sum adding each column and dividing by two.
- * 
+ *
  *   1 + 2 + 3 + 4 + 5
  +   5 + 4 + 3 + 2 + 1
  * ---------------------
  *   6 + 6 + 6 + 6 + 6
- * 
+ *
  * So: 2S = 30
  * Therefore: S = 15
- * 
+ *
  *     1 + 2 + 3 + ... + (n-1) + n
  * +   n + (n-1) + (n-2) + ... + 2 + 1
  * ------------------------------------
  * (n+1) + (n+1) + (n+1) + ... + (n+1) + (n+1)
- * 
+ *
  * 2S = n(n+1)
  * S = n(n+1)/2
  *
@@ -108,8 +107,10 @@ function qs(arr: number[], low: number, high: number): void {
   qs(arr, pivotIdx + 1, high);
 }
 
+// To split the array into subarrays with elements less than or equal to the pivot and greater than the pivot
 // returns the pivot index (what did we end up splitting the array into)
 function partition(arr: number[], low: number, high: number): number {
+  // choose pivot by using the last element of the current subarray
   const pivot = arr[high];
   let idx = low - 1;
 
@@ -133,6 +134,8 @@ function partition(arr: number[], low: number, high: number): number {
 }
 
 /**
+ * MergeSort
+ *
  * MergeSort works similarly but divides the array in half repeatedly until each piece
  * has one element, then merges those pieces back together in sorted order.
  * MergeSort guarantees O(n log n) always (and is thus "more stable"), but uses O(n) extra space.
