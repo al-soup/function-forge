@@ -1,11 +1,12 @@
 import { assertEquals } from "@std/assert";
 import { expect } from "@std/expect";
 import { ArrayList } from "./array-list.ts";
+import { DoublyLinkedList } from "./linked-list.ts";
 import { type Point, solveMaze } from "./recursion.ts";
 import { RingBuffer } from "./ring-buffer.ts";
 import { binarySearch, linearSearch, twoCrystalBalls } from "./search.ts";
 import { bubbleSort, mergeSort, quickSort } from "./sort.ts";
-import { DoublyLinkedList } from "./linked-list.ts";
+import { BinaryNode, preOrderSearch } from "./tree.ts";
 
 // 100 elements
 const sortedArr = [
@@ -218,4 +219,50 @@ Deno.test(function doublyLinkedListTest() {
   expect(list.remove(9)).toEqual(9);
   expect(list.length).toEqual(2);
   expect(list.get(0)).toEqual(7);
+});
+
+Deno.test(function binaryTreeTraversal() {
+  const tree: BinaryNode<number> = {
+    value: 20,
+    right: {
+      value: 50,
+      right: {
+        value: 100,
+        right: null,
+        left: null,
+      },
+      left: {
+        value: 30,
+        right: {
+          value: 45,
+          right: null,
+          left: null,
+        },
+        left: {
+          value: 29,
+          right: null,
+          left: null,
+        },
+      },
+    },
+    left: {
+      value: 10,
+      right: {
+        value: 15,
+        right: null,
+        left: null,
+      },
+      left: {
+        value: 5,
+        right: {
+          value: 7,
+          right: null,
+          left: null,
+        },
+        left: null,
+      },
+    },
+  };
+
+  expect(preOrderSearch(tree)).toEqual([20, 10, 5, 7, 15, 50, 30, 29, 45, 100]);
 });
