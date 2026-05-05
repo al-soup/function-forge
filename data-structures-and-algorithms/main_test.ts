@@ -6,7 +6,7 @@ import { type Point, solveMaze } from "./recursion.ts";
 import { RingBuffer } from "./ring-buffer.ts";
 import { binarySearch, linearSearch, twoCrystalBalls } from "./search.ts";
 import { bubbleSort, mergeSort, quickSort } from "./sort.ts";
-import { BinaryNode, preOrderSearch } from "./tree.ts";
+import { BinaryNode, breadthFirstSearch, preOrderSearch } from "./tree.ts";
 
 // 100 elements
 const sortedArr = [
@@ -221,48 +221,54 @@ Deno.test(function doublyLinkedListTest() {
   expect(list.get(0)).toEqual(7);
 });
 
-Deno.test(function binaryTreeTraversal() {
-  const tree: BinaryNode<number> = {
-    value: 20,
+const tree: BinaryNode<number> = {
+  value: 20,
+  right: {
+    value: 50,
     right: {
-      value: 50,
-      right: {
-        value: 100,
-        right: null,
-        left: null,
-      },
-      left: {
-        value: 30,
-        right: {
-          value: 45,
-          right: null,
-          left: null,
-        },
-        left: {
-          value: 29,
-          right: null,
-          left: null,
-        },
-      },
+      value: 100,
+      right: null,
+      left: null,
     },
     left: {
-      value: 10,
+      value: 30,
       right: {
-        value: 15,
+        value: 45,
         right: null,
         left: null,
       },
       left: {
-        value: 5,
-        right: {
-          value: 7,
-          right: null,
-          left: null,
-        },
+        value: 29,
+        right: null,
         left: null,
       },
     },
-  };
+  },
+  left: {
+    value: 10,
+    right: {
+      value: 15,
+      right: null,
+      left: null,
+    },
+    left: {
+      value: 5,
+      right: {
+        value: 7,
+        right: null,
+        left: null,
+      },
+      left: null,
+    },
+  },
+};
 
+Deno.test(function binaryTreeDepthFirstTraversal() {
   expect(preOrderSearch(tree)).toEqual([20, 10, 5, 7, 15, 50, 30, 29, 45, 100]);
+});
+
+Deno.test(function binaryTreeBreadthFirstSearch() {
+  expect(breadthFirstSearch(tree, 45)).toEqual(true);
+  expect(breadthFirstSearch(tree, 7)).toEqual(true);
+  expect(breadthFirstSearch(tree, 69)).toEqual(false);
 });

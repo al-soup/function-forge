@@ -1,5 +1,3 @@
-import path from "node:path";
-
 export type BinaryNode<T> = {
   value: T;
   left: BinaryNode<T> | null;
@@ -9,7 +7,7 @@ export type BinaryNode<T> = {
 /**
  * Tree Traversal
  *
- * This is a depth-first traversal, because we are trying to go down as far as possible (left)
+ * This is a depth-first traversal (DFS), because we are trying to go down as far as possible (left)
  * before visiting the node
  *
  * @returns the visited nodes
@@ -71,4 +69,37 @@ function walk(curr: BinaryNode<number> | null, path: number[]): number[] {
   // post
   // path.push(curr.value);
   // return path;
+}
+
+/**
+ * Binary-Tree Search (vs Traversal where you stop on find) Breadth-first (BFS) will visit all items (left-to-right) that are siblings before doing the same
+ * on the next child-level. The data structure used for this is a queue (as opposed to a stack in a depth-fist traversal).
+ * The queue size will double with each level.
+ *
+ * Running time is going to be O(n).
+ *
+ * ~ But if we use a JS array the running time is going to be O(n^2) for un/shift operations: for every element that we add
+ * into the queue (n), we need to shift n items.
+ *
+ */
+export function breadthFirstSearch(
+  head: BinaryNode<number>,
+  needle: number,
+): boolean {
+  const q = [head];
+
+  while (q.length) {
+    const curr = q.shift()!;
+
+    if (curr.value === needle) return true;
+
+    if (curr.left) {
+      q.push(curr.left);
+    }
+    if (curr.right) {
+      q.push(curr.right);
+    }
+  }
+
+  return false;
 }
