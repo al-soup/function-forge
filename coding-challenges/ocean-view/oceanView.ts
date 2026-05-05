@@ -44,7 +44,7 @@ other test cases
 [7,2,5,1,9]
 */
 
-const getBuildingsWithOceanView = (buildingsHeights: number[]) => {
+export const getBuildingsWithOceanView = (buildingsHeights: number[]) => {
   const buildingsWithOceanView: number[] = [];
 
   for (const [i, buildingHeight] of buildingsHeights.entries()) {
@@ -65,3 +65,19 @@ const getBuildingsWithOceanView = (buildingsHeights: number[]) => {
 };
 
 console.log(getBuildingsWithOceanView([4, 2, 3, 1]));
+
+// Alternative Solution
+
+// export const getBuildingsWithOceanView = (buildingsHeights: number[]) => {
+//   let max = buildingsHeights[buildingsHeights.length-1]
+//   const hasOceanView = []
+//   for (let i = buildingsHeights.length -1; i >= 0; i--) {
+//     if (buildingsHeights[i] > max) {
+//       max = buildingsHeights[i]
+//       hasOceanView.push(i)
+//     }
+//   ...
+
+//   }
+
+// }
