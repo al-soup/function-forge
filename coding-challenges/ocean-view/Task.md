@@ -1,5 +1,7 @@
 # Ocean View
 
+## Task
+
 There are n buildings in a line. You are given an integer array heights of size n that represents the heights of the buildings in the line.
 
 The ocean is to the right of the buildings. A building has an ocean view if the building can see the ocean without obstructions.
