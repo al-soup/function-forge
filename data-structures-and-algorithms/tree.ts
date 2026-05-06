@@ -1,3 +1,4 @@
+// Any node is in itself a tree (it has children with values)
 export type BinaryNode<T> = {
   value: T;
   left: BinaryNode<T> | null;
@@ -8,7 +9,9 @@ export type BinaryNode<T> = {
  * Tree Traversal
  *
  * This is a depth-first traversal (DFS), because we are trying to go down as far as possible (left)
- * before visiting the node
+ * before visiting the node. When using DFS traversal you are preserving the shape of the traversal
+ * which is not the case for BFS (If you compare two trees you might compare come to the same results
+ * for the values in the tree although the shape of the two trees is not identical).
  *
  * @returns the visited nodes
  */
