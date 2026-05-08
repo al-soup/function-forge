@@ -8,10 +8,10 @@ export type BinaryNode<T> = {
 /**
  * Tree Traversal
  *
- * This is a depth-first traversal (DFS), because we are trying to go down as far as possible (left)
- * before visiting the node. When using DFS traversal you are preserving the shape of the traversal
- * which is not the case for BFS (If you compare two trees you might compare come to the same results
- * for the values in the tree although the shape of the two trees is not identical).
+ * This is a depth-first traversal (DFT), because we are trying to go down as far as possible (left)
+ * before visiting the node. When using DFT traversal you are preserving the shape of the traversal
+ * which is not the case for BFT. If you compare two trees you might come to the same results
+ * for the values in the tree although the shape of the two trees might not be identical.
  *
  * @returns the visited nodes
  */
@@ -75,7 +75,7 @@ function walk(curr: BinaryNode<number> | null, path: number[]): number[] {
 }
 
 /**
- * Binary-Tree Search (vs Traversal where you stop on find) Breadth-first (BFS) will visit all items (left-to-right) that are siblings before doing the same
+ * Binary-Tree Breadth-first search (BFS) will visit all items (left-to-right) that are siblings before doing the same
  * on the next child-level. The data structure used for this is a queue (as opposed to a stack in a depth-fist traversal).
  * The queue size will double with each level.
  *
@@ -105,4 +105,27 @@ export function breadthFirstSearch(
   }
 
   return false;
+}
+
+/**
+ * DeptFirstSearch (DTS) on a Binary Tree (BinarySearch on a tree)
+ *
+ * Time complexity on a perfectly balanced tree: O(log n) -> with every step we half the search space.
+ */
+export function deptFirstSearch(
+  head: BinaryNode<number> | null,
+  needle: number,
+): boolean {
+  // base case: exceed the height of the tree
+  if (!head) return false;
+  // base case: find the value
+  if (head.value === needle) return true;
+
+  //        needle <= nodeValue < needle
+  // go left ------^           ^------ go right
+  // we could also write it like this for simplicity:
+  // if (head.value < needle) return deptFirstSearch(head.right, needle);
+
+  if (needle <= head.value) return deptFirstSearch(head.left, needle);
+  else return deptFirstSearch(head.right, needle);
 }

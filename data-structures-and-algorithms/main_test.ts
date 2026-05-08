@@ -6,7 +6,12 @@ import { type Point, solveMaze } from "./recursion.ts";
 import { RingBuffer } from "./ring-buffer.ts";
 import { binarySearch, linearSearch, twoCrystalBalls } from "./search.ts";
 import { bubbleSort, mergeSort, quickSort } from "./sort.ts";
-import { BinaryNode, breadthFirstSearch, preOrderSearch } from "./tree.ts";
+import {
+  BinaryNode,
+  breadthFirstSearch,
+  deptFirstSearch,
+  preOrderSearch,
+} from "./tree.ts";
 
 // 100 elements
 const sortedArr = [
@@ -271,4 +276,10 @@ Deno.test(function binaryTreeBreadthFirstSearch() {
   expect(breadthFirstSearch(tree, 45)).toEqual(true);
   expect(breadthFirstSearch(tree, 7)).toEqual(true);
   expect(breadthFirstSearch(tree, 69)).toEqual(false);
+});
+
+Deno.test(function binaryTreeSearch() {
+  expect(deptFirstSearch(tree, 45)).toEqual(true);
+  expect(deptFirstSearch(tree, 7)).toEqual(true);
+  expect(deptFirstSearch(tree, 69)).toEqual(false);
 });
