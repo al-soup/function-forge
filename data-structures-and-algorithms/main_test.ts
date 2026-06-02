@@ -1,6 +1,7 @@
 import { assertEquals } from "@std/assert";
 import { expect } from "@std/expect";
 import { ArrayList } from "./array-list.ts";
+import { HashMap } from "./map.ts";
 import MinHeap from "./heap.ts";
 import { DoublyLinkedList } from "./linked-list.ts";
 import { type Point, solveMaze } from "./recursion.ts";
@@ -310,4 +311,74 @@ Deno.test(function minHeap() {
   expect(heap.delete()).toEqual(69);
   expect(heap.delete()).toEqual(420);
   expect(heap.length).toEqual(0);
+});
+
+Deno.test(function hashMapTest() {
+  const map = new HashMap<string, number>();
+
+  // basic set / get / has / delete with string keys
+  map.set("one", 1);
+  map.set("two", 2);
+  map.set("three", 3);
+  expect(map.size).toEqual(3);
+  expect(map.get("one")).toEqual(1);
+  expect(map.get("two")).toEqual(2);
+  expect(map.get("three")).toEqual(3);
+  expect(map.has("two")).toEqual(true);
+  expect(map.has("missing")).toEqual(false);
+  expect(map.get("missing")).toEqual(undefined);
+
+  // overwriting an existing key keeps size the same
+  map.set("one", 11);
+  expect(map.size).toEqual(3);
+  expect(map.get("one")).toEqual(11);
+
+  // delete returns the removed value and decrements size; deleting twice is a no-op
+  expect(map.delete("two")).toEqual(2);
+  expect(map.size).toEqual(2);
+  expect(map.has("two")).toEqual(false);
+  expect(map.delete("two")).toEqual(undefined);
+  expect(map.delete("never-existed")).toEqual(undefined);
+
+  // number keys
+  const numMap = new HashMap<number, string>();
+  numMap.set(1, "a");
+  numMap.set(42, "b");
+  numMap.set(-7, "c");
+  expect(numMap.get(1)).toEqual("a");
+  expect(numMap.get(42)).toEqual("b");
+  expect(numMap.get(-7)).toEqual("c");
+});
+
+Deno.test(function hashMapResizeTest() {
+  // start at capacity 4 — at load factor 0.75 the 4th insert should trigger a resize
+  const map = new HashMap<string, number>(4);
+  expect(map.capacity).toEqual(4);
+
+  map.set("a", 1);
+  map.set("b", 2);
+  map.set("c", 3);
+  expect(map.capacity).toEqual(4);
+
+  // (size + 1) / capacity = 4 / 4 = 1.0 > 0.75 → resize before insert
+  map.set("d", 4);
+  expect(map.capacity).toEqual(8);
+  expect(map.size).toEqual(4);
+
+  // every prior key still resolves after rehash
+  expect(map.get("a")).toEqual(1);
+  expect(map.get("b")).toEqual(2);
+  expect(map.get("c")).toEqual(3);
+  expect(map.get("d")).toEqual(4);
+
+  // hammer many keys at a tiny starting capacity to stress collisions + multiple resizes
+  const stress = new HashMap<string, number>(2);
+  const n = 50;
+  for (let i = 0; i < n; i++) {
+    stress.set(`key-${i}`, i);
+  }
+  expect(stress.size).toEqual(n);
+  for (let i = 0; i < n; i++) {
+    expect(stress.get(`key-${i}`)).toEqual(i);
+  }
 });
