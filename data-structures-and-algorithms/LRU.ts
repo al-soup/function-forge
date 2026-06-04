@@ -15,8 +15,10 @@ export class LRU<K, V> {
 
   // The linked-list is the fundamental storage unit
   private lookup: Map<K, Node<V>>;
+  // also track a node-to-key mapping for efficient cache cleanup
   private reverseLookup: Map<Node<V>, K>;
 
+  // Capacity: The maximum number of items the cache can hold before evicting the least recently used item
   constructor(private capacity: number) {
     // How many items do we wish to have inside our cache
 
