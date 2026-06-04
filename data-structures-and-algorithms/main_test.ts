@@ -14,6 +14,7 @@ import {
   deptFirstSearch,
   preOrderSearch,
 } from "./tree.ts";
+import { LRU } from "./LRU.ts";
 
 // 100 elements
 const sortedArr = [
@@ -381,4 +382,30 @@ Deno.test(function hashMapResizeTest() {
   for (let i = 0; i < n; i++) {
     expect(stress.get(`key-${i}`)).toEqual(i);
   }
+});
+
+Deno.test(function LRUTest() {
+  const lru = new LRU<string, number>(3);
+
+  expect(lru.get("foo")).toEqual(undefined);
+  lru.update("foo", 69);
+  expect(lru.get("foo")).toEqual(69);
+
+  lru.update("bar", 420);
+  expect(lru.get("bar")).toEqual(420);
+
+  lru.update("baz", 1337);
+  expect(lru.get("baz")).toEqual(1337);
+
+  lru.update("ball", 69420);
+  expect(lru.get("ball")).toEqual(69420);
+  expect(lru.get("foo")).toEqual(undefined);
+  expect(lru.get("bar")).toEqual(420);
+  lru.update("foo", 69);
+  expect(lru.get("bar")).toEqual(420);
+  expect(lru.get("foo")).toEqual(69);
+
+  // shouldn't of been deleted, but since bar was get'd, bar was added to the
+  // front of the list, so baz became the end
+  expect(lru.get("baz")).toEqual(undefined);
 });
